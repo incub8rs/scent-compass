@@ -26,7 +26,12 @@ function isAnswered(q, ans) {
 }
 
 export default function QuizPage({ mode, selectedDomains, onComplete, onBack }) {
-  const questionnaire = useMemo(() => buildQuestionnaire(selectedDomains), [selectedDomains])
+  // The "liked fragrances" question is collected in the intro step before
+  // domain selection, so exclude it from the main question flow here.
+  const questionnaire = useMemo(
+    () => buildQuestionnaire(selectedDomains).filter((q) => q.id !== 'liked'),
+    [selectedDomains],
+  )
   const [index, setIndex] = useState(0)
   const [answers, setAnswers] = useState({})
 

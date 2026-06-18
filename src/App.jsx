@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import WelcomePage from './pages/WelcomePage'
+import IntroFragrancesPage from './pages/IntroFragrancesPage'
 import DomainSelectPage from './pages/DomainSelectPage'
 import QuizPage from './pages/QuizPage'
 import SummaryPage from './pages/SummaryPage'
@@ -14,9 +15,10 @@ import {
 } from './utils/storage'
 
 export default function App() {
-  const [stage, setStage] = useState('welcome') // welcome | domains | quiz | summary
+  const [stage, setStage] = useState('welcome') // welcome | intro | domains | quiz | summary
   const [mode, setMode] = useState('self')
   const [selectedDomains, setSelectedDomains] = useState([])
+  const [likedAnswer, setLikedAnswer] = useState({ items: [] })
   const [answers, setAnswers] = useState({})
   const [profileId, setProfileId] = useState(null)
   const [createdAt, setCreatedAt] = useState(null)
@@ -52,7 +54,8 @@ export default function App() {
   // ---- Flow handlers ----
   const handleStart = (m) => {
     setMode(m)
-    setStage('domains')
+    setLikedAnswer({ items: [] })
+    setStage('intro')
   }
 
   const handleDomains = (domains) => {
@@ -65,7 +68,8 @@ export default function App() {
   }
 
   const handleComplete = (ans) => {
-    setAnswers(ans)
+    // Fold in the liked fragrances captured during the intro step.
+    setAnswers({ liked: likedAnswer, ...ans })
     setSaved(false)
     setStage('summary')
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -89,6 +93,7 @@ export default function App() {
 
   const handleRetake = () => {
     setStage('welcome')
+    setLikedAnswer({ items: [] })
     setAnswers({})
     setProfileId(null)
     setCreatedAt(null)
@@ -150,10 +155,19 @@ export default function App() {
           />
         )}
 
+        {stage === 'intro' && (
+          <IntroFragrancesPage
+            value={likedAnswer}
+            onChange={setLikedAnswer}
+            onBack={() => setStage('welcome')}
+            onContinue={() => setStage('domains')}
+          />
+        )}
+
         {stage === 'domains' && (
           <DomainSelectPage
             initial={selectedDomains}
-            onBack={() => setStage('welcome')}
+            onBack={() => setStage('intro')}
             onContinue={handleDomains}
           />
         )}
