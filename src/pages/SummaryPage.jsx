@@ -54,7 +54,7 @@ export default function SummaryPage({
       {/* Header */}
       <div className="text-center">
         <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-compass-200 bg-white/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-compass-700">
-          <img src="/compass.svg" alt="" className="h-4 w-4" /> Your Scent Compass
+          <img src={`${import.meta.env.BASE_URL}compass.svg`} alt="" className="h-4 w-4" /> Your Scent Compass
         </div>
         <h1 className="font-display text-4xl font-semibold text-ink sm:text-5xl">
           {summary.headline}

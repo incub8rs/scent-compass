@@ -129,7 +129,7 @@ export default function App() {
             onClick={handleRetake}
             className="flex items-center gap-2 font-display text-lg font-semibold text-ink"
           >
-            <img src="/compass.svg" alt="Scent Compass" className="h-7 w-7" />
+            <img src={`${import.meta.env.BASE_URL}compass.svg`} alt="Scent Compass" className="h-7 w-7" />
             Scent Compass
           </button>
           {stage !== 'welcome' && (
