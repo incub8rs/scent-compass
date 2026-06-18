@@ -488,6 +488,7 @@ export const QUESTION_BANK = [
 
 // Ordered phases used to assemble a coherent questionnaire.
 const ORDER = [
+  'liked',
   'compliment',
   'setting',
   'texture',
@@ -503,7 +504,6 @@ const ORDER = [
   'sweetness',
   'intensity',
   'avoid',
-  'liked',
   'disliked',
   'describeWork',
   'describeEvening',
